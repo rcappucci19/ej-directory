@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EJ Directory</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f1ed;padding:1.5rem;color:#484f57}
+h1{font-size:18px;font-weight:600;margin-bottom:1rem;color:#c76229;letter-spacing:0.02em}
+#search{width:100%;font-size:16px;padding:10px 14px;border:1px solid #d3c8b9;border-radius:10px;background:#fff;color:#484f57;outline:none}
+#search:focus{border-color:#484f57}
+#search::placeholder{color:#b0a99e}
+#results{margin-top:1rem}
+.card{background:#fff;border:1px solid #d3c8b9;border-radius:12px;padding:1rem 1.25rem;margin-bottom:10px}
+.card-name{font-size:15px;font-weight:600;margin-bottom:2px;color:#484f57}
+.card-title{font-size:13px;color:#8a8e93;margin-bottom:12px}
+.field{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-top:1px solid #ede8e1;font-size:13px}
+.fl{color:#b0a99e;min-width:72px;padding-top:1px;font-size:12px;text-transform:uppercase;letter-spacing:0.04em}
+.fv{color:#484f57;flex:1;word-break:break-word}
+.fv a{color:#484f57;text-decoration:underline;text-decoration-color:#d3c8b9}
+.fv a:hover{text-decoration-color:#484f57}
+.avatar{width:40px;height:40px;border-radius:50%;background:#ede8e1;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#484f57;flex-shrink:0}
+.card-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.hint{font-size:13px;color:#8a8e93;padding:8px 0}
+.mbtn{background:#fff;border:1px solid #d3c8b9;border-radius:8px;padding:8px 14px;font-size:14px;color:#484f57;cursor:pointer;display:block;width:100%;text-align:left;margin-bottom:6px}
+.mbtn:hover{background:#f4f1ed;border-color:#484f57}
+</style>
+</head>
+<body>
+<h1>EJ Directory</h1>
+<input id="search" type="text" placeholder="Name or name + field (kim, brett phone, jamie email…)" autocomplete="off" />
+<div id="results"></div>
+<script>
+const DIR=[
+  {name:"Elizabeth Gordon",title:"CEO",dept:"CEO",cell:"(917) 434-3323",address:"1412 E Street SE Washington, DC 20003",calendly:"https://calendly.com/elizabeth-bvy",ext:"700",direct:"(987) 654-3210",email:"elizabeth@extraordinaryjourneys.com"},
+  {name:"Marcia Gordon",title:"Co-founder (not an employee)",dept:"CEO",cell:"(646) 342-1703",address:"1331 Park Av SW #902 Albuquerque, NM 87102",ext:"701",direct:"(876) 543-2109",email:"marcia@extraordinaryjourneys.com"},
+  {name:"Lisa Govender",title:"Concierge | Africa",dept:"Concierge",cell:"+27 83 946 5109",address:"19A Duncan Drive, Unit 4 Duncan Manors, Westville North, 3629, Durban, South Africa",email:"lisagovender@extraordinaryjourneys.com"},
+  {name:"Sumendri Govender",title:"Head of Concierge | Africa",dept:"Concierge",cell:"+27 845 151 928",address:"2a Duff road Brendavere Estate Unit 35, Craigavon, Fourways, Gauteng 2191",email:"sumendri@extraordinaryjourneys.com"},
+  {name:"Shiyrah Keeney",title:"Head of Payables | Finance",dept:"Finance",cell:"(828) 674-7595",address:"3726 Prince William Dr Fairfax, VA 22031",email:"accounts@extraordinaryjourneys.com"},
+  {name:"Catherine Kennedy",title:"Accounts Manager",dept:"Finance",cell:"(860) 987-9937",address:"8722 Briar Oak Ct Charlotte, NC 28226",email:"catherine@extraordinaryjourneys.com"},
+  {name:"Nicole Szulborski",title:"Administrative Assistant",dept:"Admin",cell:"(412) 334 8559",address:"13490 Hilltop Groves Blvd APT 13205 Clermont, FL 34711",email:"nicole@extraordinaryjourneys.com"},
+  {name:"Chloe Berge",title:"Content Database Manager",dept:"Marketing",cell:"(778) 389-39951",address:"12208 Forest Place Maple Ridge, BC V2X 8G4",email:"chloe@extraordinaryjourneys.com"},
+  {name:"Lisa Goosen",title:"Social Media Manager",dept:"Marketing",cell:"+44 7384127872",address:"24 St Christopher's Close, Warwick, UK",email:"lisag@extraordinaryjourneys.com"},
+  {name:"Katie Hoppenjans",title:"Head of Digital Marketing",dept:"Marketing",cell:"(614) 592-7767",address:"215 Arizona Ave, #2 Atlanta, GA 30307",ext:"730",direct:"(202) 599-8451",email:"katie@extraordinaryjourneys.com"},
+  {name:"Jennifer Hubbert",title:"SEO Content Writer",dept:"Marketing",cell:"(604) 868 8604",address:"43 15775 Mountain View Dr Surrey, BC V3Z0W7",email:"jennifer@extraordinaryjourneys.com"},
+  {name:"Beatriz Taveira",title:"Image Coordinator",dept:"Marketing",cell:"+27 66 440 5051",address:"29 Riverside Drive Kommetjie Capetown 7976",email:"beatriz@extraordinaryjourneys.com"},
+  {name:"Joey Tyson",title:"Copywriter",dept:"Marketing",cell:"(+39) 3516375597",address:"Via Bari 20, 20143, Milano, Italia",email:"joey@extraordinaryjourneys.com"},
+  {name:"Tegan Wille",title:"Head of Creative",dept:"Marketing",cell:"+27 82 805 3610",address:"4 Keurboom Road, Chapmans Peak, 7979, Cape Town, Western Cape",email:"tegan@extraordinaryjourneys.com"},
+  {name:"Marushka Stipinovich",title:"Visual Asset Manager",dept:"Marketing",cell:"+62 823 41913742",address:"Jl. Sunset Road, No.105, Seminyak, Kec. Kuta, Kab. Badung, Bali, 80361",email:"marushka@extraordinaryjourneys.com"},
+  {name:"Chloe Igo",title:"Graphic Designer",dept:"Marketing",cell:"+27 83 391 3455",address:"13 St Quintons Rd, Oranjezicht, Cape Town, 8001",email:"chloe.igo@extraordinaryjourneys.com"},
+  {name:"Melony van der Merwe",title:"Head of Partnerships & PR",dept:"Marketing",cell:"+1 (347) 496 1302",address:"1600 West Ave Apt 201 Miami Beach, FL 33139",ext:"732",direct:"(305) 390-4334",email:"melony@extraordinaryjourneys.com"},
+  {name:"Julie Banks",title:"Trip Coordinator",dept:"Operations",cell:"(404) 483-2788",address:"2771 Upper Paw Paw Road Marshall, NC 28753",calendly:"https://calendly.com/julie-extraordinaryjourneys",ext:"722",direct:"(929) 415-8397",email:"julie@extraordinaryjourneys.com"},
+  {name:"Amber Blanchard",title:"Trip Operations Manager",dept:"Operations",cell:"(608) 712-0092",address:"1 N Berkshire Ln Roundlake, IL 60073",calendly:"https://calendly.com/amber-extraordinaryjourneys",ext:"789",direct:"(929) 298-6722",email:"amber@extraordinaryjourneys.com"},
+  {name:"Jon Blanchard",title:"Operations Assistant",dept:"Operations",cell:"(608) 712-0387",address:"470 Lisa Ct Oregon, WI 53575",email:"jblanchard@extraordinaryjourneys.com"},
+  {name:"Brea Boatwright",title:"Trip Coordinator",dept:"Operations",cell:"(407) 443-2675",address:"300 Pecan Dr. Dallas, GA 30132",ext:"729",direct:"(929) 295-5345",email:"brea@extraordinaryjourneys.com"},
+  {name:"Rachel Cappucci",title:"Head of Business Operations",dept:"Operations",cell:"(508) 981-8383",address:"1 Garfield Ave Shrewsbury, MA 01545",calendly:"https://calendly.com/rachel-extraordinaryjourneys",ext:"715",direct:"(929) 294-7523",email:"rachel@extraordinaryjourneys.com"},
+  {name:"Samantha Lambert",title:"Trip Coordinator",dept:"Operations",cell:"(330) 771-3987",address:"108 Murray Ave Minerva, OH 44657",ext:"718",direct:"(929) 399-2766",email:"samantha@extraordinaryjourneys.com"},
+  {name:"Mackenzie Morgan",title:"South America Trip Coordinator",dept:"Operations",cell:"(980) 226-8350",address:"17034 Freshwater Lane Cornelius, NC 28031",calendly:"https://calendly.com/mackenzie-extraordinaryjourneys",ext:"723",direct:"(929) 415-8474",email:"mackenzie@extraordinaryjourneys.com"},
+  {name:"Lisa Newby-Fraser",title:"Trip Coordinator",dept:"Operations",cell:"+27 82 831 9621",address:"14 Partridge Place Melkbos Cape Town 7441",calendly:"https://calendly.com/lisa-extraordinaryjourneys",ext:"728",direct:"(940) 239-5515",email:"lisa@extraordinaryjourneys.com"},
+  {name:"Lauren Sullivan",title:"Trip Coordinator",dept:"Operations",cell:"(907) 612-1534",address:"610 E Callender Street Livingston MT 59047",calendly:"https://calendly.com/lauren-extraordinaryjourneys",ext:"709",direct:"(929) 209-0689",email:"lauren@extraordinaryjourneys.com"},
+  {name:"Gena Tweed",title:"Operations Assistant",dept:"Operations",cell:"(760) 271-0225",address:"4906 N Shadow Lane, Prescott Valley, AZ 86314",email:"gena@extraordinaryjourneys.com"},
+  {name:"Jessica Straw",title:"Trip Coordinator",dept:"Operations",cell:"(608) 712-0262",address:"3479 Big Sky Muscatine, IA 52761",calendly:"https://calendly.com/jessica-extraordinaryjourneys",ext:"733",direct:"(202) 223-8760",email:"jessica@extraordinaryjourneys.com"},
+  {name:"Katelyn McMillan",title:"Trip Coordinator (part time)",dept:"Operations",cell:"(765) 336-4689",address:"405 E 6th Street Sheridan, IN 46069",ext:"719",direct:"(929) 415-8301",email:"katelyn@extraordinaryjourneys.com"},
+  {name:"Alyssa Hager",title:"Trip Coordinator",dept:"Operations",cell:"563-568-1356",address:"500 CR 742/294 Almont, CO 81210",calendly:"https://calendly.com/alyssa-extraordinaryjourneys",ext:"705",direct:"(929) 679-5902",email:"alyssa@extraordinaryjourneys.com"},
+  {name:"Elizma Fourie",title:"Trip Coordinator",dept:"Operations",ext:"706",direct:"(929) 662-5165",email:"elizma@extraordinaryjourneys.com"},
+  {name:"Amelia Adamson",title:"Destination Specialist | Africa, Middle East & India",dept:"Sales",cell:"(503) 367 0896",address:"Colletts Gate 31B Oslo, Norway 0169",calendly:"https://calendly.com/amelia-extraordinaryjourneys",ext:"712",direct:"(929) 295-5275",email:"amelia@extraordinaryjourneys.com"},
+  {name:"Anisha Barrientos",title:"Senior Destination Specialist | Africa",dept:"Sales",cell:"(310) 866-1089",address:"7440 McCool Ave Los Angeles, CA 90045",calendly:"https://calendly.com/anisha-extraordinaryjourneys",ext:"717",direct:"(929) 346-5440",email:"anisha@extraordinaryjourneys.com"},
+  {name:"Brigid Finley",title:"Destination Specialist | Africa & Middle East",dept:"Sales",cell:"(213) 458-4944",address:"806 Ethel Street Austin, TX 78704",calendly:"https://calendly.com/brigid-ej",ext:"724",direct:"(929) 578-6836",email:"brigid@extraordinaryjourneys.com"},
+  {name:"Kim Green",title:"Senior Destination Specialist | Africa",dept:"Sales",cell:"(660) 349-9620",address:"9628 E. 63rd Avenue Denver, CO 80238",calendly:"https://calendly.com/kim-extraordinaryjourneys",ext:"707",direct:"(929) 207-6347",email:"kim@extraordinaryjourneys.com"},
+  {name:"Lauren Jafry",title:"Head of Sales & Product Development | Asia",dept:"Sales",cell:"(760) 855-1102",address:"1005 San Andrade Dr Encinitas, CA 92024",calendly:"https://calendly.com/laurenj-extraordinaryjourneys",ext:"721",direct:"(929) 296-1145",email:"laurenj@extraordinaryjourneys.com"},
+  {name:"Chris Craigo",title:"Japan Specialist",dept:"Sales",cell:"(828) 655-6475",address:"3601 Conti St. Apt 5220 New Orleans LA 70119",calendly:"https://calendly.com/chris-extraordinaryjourneys",ext:"734",direct:"(614) 508-1370",email:"chris@extraordinaryjourneys.com"},
+  {name:"Pearl Jurist-Schoen",title:"Head of Sales | Africa",dept:"Sales",cell:"(978) 793-2469",address:"14 Odell Ave Beverly, MA 01915",calendly:"https://calendly.com/pearl-extraordinaryjourneys",ext:"710",direct:"(929) 263-0923",email:"pearl@extraordinaryjourneys.com"},
+  {name:"Jamie Mehrotra",title:"Head of Sales | Global",dept:"Sales",cell:"(503) 522-2571",address:"8276 Halifax The Colony, TX 75056",calendly:"https://calendly.com/jamie-extraordinaryjourneys",ext:"703",direct:"(929) 946-5659",email:"jamie@extraordinaryjourneys.com"},
+  {name:"Lara Ray",title:"Senior Destination Specialist | Africa",dept:"Sales",cell:"(774) 217-2200",address:"198 Southville Road Southborough, MA 01772",calendly:"https://calendly.com/lara-extraordinaryjourneys",ext:"708",direct:"(929) 209-0130",email:"lara@extraordinaryjourneys.com"},
+  {name:"Abby Watson",title:"Destination Specialist | Africa & South America",dept:"Sales",cell:"(319) 210-4922",address:"1990 Parkland Drive Ely, IA 52227",calendly:"https://calendly.com/abby-extraordinaryjourneys",ext:"720",direct:"(929) 415-8329",email:"abby@extraordinaryjourneys.com"},
+  {name:"Melissa Cahill",title:"Head of Sales & Product Development | North Africa & Middle East",dept:"Sales",cell:"(917) 363-9528",address:"720 Fort Washington Ave. Apt. B New York, NY 10040",calendly:"https://calendly.com/melissa-extraordinaryjourneys",ext:"702",direct:"(929) 415-8306",email:"melissa@extraordinaryjourneys.com"},
+  {name:"Brett Steele",title:"Head of Sales & Product Development | Latin America",dept:"Sales",cell:"(801) 349-8504",address:"563 N Granary Ln Midway, UT 84049",calendly:"https://calendly.com/brett-extraordinaryjourneys",ext:"704",direct:"(929) 596-7629",email:"brett@extraordinaryjourneys.com"},
+  {name:"John Moody",title:"Safari Sales Support",dept:"Sales Support",cell:"(404) 202-9340",address:"Oriente 7, A1 Colonia Allende, San Miguel de Allende GTO Mexico, 37760",ext:"725",direct:"(929) 481-5446",email:"john@extraordinaryjourneys.com"},
+  {name:"Esther Ndirangu",title:"Sales Support/Itinerary Designer",dept:"Sales Support",cell:"+254 726 769476",email:"esther@extraordinaryjourneys.com"},
+  {name:"Antonio Andrade",title:"Tech/Dashboard",dept:"Tech/Dashboard",cell:"+351 936 181 637",address:"Lisbon, Portugal",email:"tech@extraordinaryjourneys.com / antonio@whitefactory.io"},
+  {name:"ClearCom IT",title:"IT Company",dept:"IT",cell:"508-892-5555, 508-205-1116",email:"tickets@clearcomit.com"},
+  {name:"Shaun (Cremins Consulting)",title:"Quickbooks Assist",dept:"QB",address:"https://www.creminsconsulting.com/"},
+  {name:"Keap (Ben Sypher)",title:"Keap Account Rep",dept:"CRM",email:"benjamin.sypher@keap.com"},
+  {name:"Keap Support",title:"Keap Support",dept:"CRM",cell:"866-800-0004 ext 2 or 3; urgent: 480-499-6510"},
+];
+
+const FKEYS={email:['email'],cell:['cell'],phone:['cell','ext','direct'],ext:['ext'],extension:['ext'],direct:['direct'],address:['address'],cal:['calendly'],calendly:['calendly'],title:['title','dept'],department:['dept'],dept:['dept'],number:['cell','ext','direct'],call:['cell','ext','direct']};
+const FLABELS={email:'Email',cell:'Cell',ext:'Extension',direct:'Direct',address:'Address',calendly:'Calendly',title:'Title',dept:'Department'};
+
+function ini(n){return n.split(' ').filter(Boolean).slice(0,2).map(p=>p[0].toUpperCase()).join('')}
+function lev(a,b){const m=a.length,n=b.length,dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));for(let j=1;j<=n;j++)dp[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n]}
+
+function score(q,p){
+  const s=p.name.toLowerCase(),parts=s.split(' ');
+  if(s===q)return 100;if(parts.includes(q))return 90;if(s.startsWith(q))return 80;if(s.includes(q))return 70;
+  for(const w of parts){if(w.startsWith(q))return 65;}
+  for(const w of parts){if(q.length>2&&lev(q,w)===1)return 50;}
+  for(const w of parts){if(q.length>3&&lev(q,w)===2)return 30;}
+  return 0;
+}
+
+function card(p,fkeys){
+  const keys=fkeys||['cell','ext','direct','email','address','calendly','title','dept'];
+  let f='';
+  for(const k of keys){
+    const v=p[k];if(!v)continue;
+    let d=v;
+    if(k==='email')d=`<a href="mailto:${v}">${v}</a>`;
+    if(k==='calendly')d=`<a href="${v}" target="_blank">${v}</a>`;
+    f+=`<div class="field"><span class="fl">${FLABELS[k]||k}</span><span class="fv">${d}</span></div>`;
+  }
+  if(!f)f='<div class="hint">No data for that field.</div>';
+  return `<div class="card"><div class="card-head"><div class="avatar">${ini(p.name)}</div><div><div class="card-name">${p.name}</div><div class="card-title">${p.title}</div></div></div>${f}</div>`;
+}
+
+let pm=null,pf=null;
+function selectMatch(i){document.getElementById('results').innerHTML=card(pm[i],pf);pm=null;pf=null}
+
+function render(raw){
+  const out=document.getElementById('results');
+  if(!raw.trim()){out.innerHTML='';return;}
+  const input=raw.trim().toLowerCase();
+  let fkey=null,nq=input;
+  for(const k of Object.keys(FKEYS)){
+    if(new RegExp('\\b'+k+'s?\\b','i').test(input)){fkey=k;nq=input.replace(new RegExp('\\b'+k+'s?\\b','i'),'').trim();break;}
+  }
+  const fkeys=fkey?FKEYS[fkey]:null;
+  const scored=DIR.map(p=>({p,s:score(nq,p)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s);
+  const matches=scored.map(x=>x.p);
+  if(!matches.length){out.innerHTML='<div class="hint">No match found. Try a full or partial name.</div>';return;}
+  if(matches.length===1){out.innerHTML=card(matches[0],fkeys);return;}
+  if(scored[0].s>=65&&matches.length<=8){
+    pm=matches;pf=fkeys;
+    let h='<div class="hint">Multiple matches. Which one?</div>';
+    matches.forEach((m,i)=>h+=`<button class="mbtn" onclick="selectMatch(${i})">${m.name} &middot; ${m.title}</button>`);
+    out.innerHTML=h;return;
+  }
+  out.innerHTML=card(matches[0],fkeys);
+}
+
+const inp=document.getElementById('search');
+let t;
+inp.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>render(inp.value),80);});
+inp.focus();
+</script>
+</body>
+</html>
