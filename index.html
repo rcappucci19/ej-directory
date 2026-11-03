@@ -6,25 +6,24 @@
 <title>EJ Directory</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f1ed;padding:1.5rem;color:#484f57}
-h1{font-size:18px;font-weight:600;margin-bottom:1rem;color:#c76229;letter-spacing:0.02em}
-#search{width:100%;font-size:16px;padding:10px 14px;border:1px solid #d3c8b9;border-radius:10px;background:#fff;color:#484f57;outline:none}
-#search:focus{border-color:#484f57}
-#search::placeholder{color:#b0a99e}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4f0;padding:1.5rem;color:#1a1a18}
+h1{font-size:18px;font-weight:500;margin-bottom:1rem;color:#1a1a18}
+#search{width:100%;font-size:16px;padding:10px 14px;border:1px solid #ccc;border-radius:10px;background:#fff;color:#1a1a18;outline:none}
+#search:focus{border-color:#888}
 #results{margin-top:1rem}
-.card{background:#fff;border:1px solid #d3c8b9;border-radius:12px;padding:1rem 1.25rem;margin-bottom:10px}
-.card-name{font-size:15px;font-weight:600;margin-bottom:2px;color:#484f57}
-.card-title{font-size:13px;color:#8a8e93;margin-bottom:12px}
-.field{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-top:1px solid #ede8e1;font-size:13px}
-.fl{color:#b0a99e;min-width:72px;padding-top:1px;font-size:12px;text-transform:uppercase;letter-spacing:0.04em}
-.fv{color:#484f57;flex:1;word-break:break-word}
-.fv a{color:#484f57;text-decoration:underline;text-decoration-color:#d3c8b9}
-.fv a:hover{text-decoration-color:#484f57}
-.avatar{width:40px;height:40px;border-radius:50%;background:#ede8e1;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#484f57;flex-shrink:0}
+.card{background:#fff;border:1px solid #e0ddd5;border-radius:12px;padding:1rem 1.25rem;margin-bottom:10px}
+.card-name{font-size:15px;font-weight:500;margin-bottom:2px}
+.card-title{font-size:13px;color:#666;margin-bottom:12px}
+.field{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-top:1px solid #f0ede5;font-size:13px}
+.fl{color:#888;min-width:72px;padding-top:1px}
+.fv{color:#1a1a18;flex:1;word-break:break-word}
+.fv a{color:#1a5fa8;text-decoration:none}
+.fv a:hover{text-decoration:underline}
+.avatar{width:40px;height:40px;border-radius:50%;background:#e6f1fb;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:13px;color:#185fa5;flex-shrink:0}
 .card-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
-.hint{font-size:13px;color:#8a8e93;padding:8px 0}
-.mbtn{background:#fff;border:1px solid #d3c8b9;border-radius:8px;padding:8px 14px;font-size:14px;color:#484f57;cursor:pointer;display:block;width:100%;text-align:left;margin-bottom:6px}
-.mbtn:hover{background:#f4f1ed;border-color:#484f57}
+.hint{font-size:13px;color:#666;padding:8px 0}
+.mbtn{background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px 14px;font-size:14px;color:#1a1a18;cursor:pointer;display:block;width:100%;text-align:left;margin-bottom:6px}
+.mbtn:hover{background:#f5f4f0}
 </style>
 </head>
 <body>
@@ -32,6 +31,7 @@ h1{font-size:18px;font-weight:600;margin-bottom:1rem;color:#c76229;letter-spacin
 <input id="search" type="text" placeholder="Name or name + field (kim, brett phone, jamie email…)" autocomplete="off" />
 <div id="results"></div>
 <script>
+// Data refreshed from Company_Directory.xlsx (Current Employees), SharePoint version saved Oct 30, 2026
 const DIR=[
   {name:"Elizabeth Gordon",title:"CEO",dept:"CEO",cell:"(917) 434-3323",address:"1412 E Street SE Washington, DC 20003",calendly:"https://calendly.com/elizabeth-bvy",ext:"700",direct:"(987) 654-3210",email:"elizabeth@extraordinaryjourneys.com"},
   {name:"Marcia Gordon",title:"Co-founder (not an employee)",dept:"CEO",cell:"(646) 342-1703",address:"1331 Park Av SW #902 Albuquerque, NM 87102",ext:"701",direct:"(876) 543-2109",email:"marcia@extraordinaryjourneys.com"},
@@ -45,28 +45,27 @@ const DIR=[
   {name:"Katie Hoppenjans",title:"Head of Digital Marketing",dept:"Marketing",cell:"(614) 592-7767",address:"215 Arizona Ave, #2 Atlanta, GA 30307",ext:"730",direct:"(202) 599-8451",email:"katie@extraordinaryjourneys.com"},
   {name:"Jennifer Hubbert",title:"SEO Content Writer",dept:"Marketing",cell:"(604) 868 8604",address:"43 15775 Mountain View Dr Surrey, BC V3Z0W7",email:"jennifer@extraordinaryjourneys.com"},
   {name:"Beatriz Taveira",title:"Image Coordinator",dept:"Marketing",cell:"+27 66 440 5051",address:"29 Riverside Drive Kommetjie Capetown 7976",email:"beatriz@extraordinaryjourneys.com"},
-  {name:"Joey Tyson",title:"Copywriter",dept:"Marketing",cell:"(+39) 3516375597",address:"Via Bari 20, 20143, Milano, Italia",email:"joey@extraordinaryjourneys.com"},
+  {name:"Joey Tyson",title:"Copywriter",dept:"Marketing",cell:"(+44) 7467 953238",address:"Via Bari 20, 20143, Milano, Italia",email:"joey@extraordinaryjourneys.com"},
   {name:"Tegan Wille",title:"Head of Creative",dept:"Marketing",cell:"+27 82 805 3610",address:"4 Keurboom Road, Chapmans Peak, 7979, Cape Town, Western Cape",email:"tegan@extraordinaryjourneys.com"},
-  {name:"Marushka Stipinovich",title:"Visual Asset Manager",dept:"Marketing",cell:"+62 823 41913742",address:"Jl. Sunset Road, No.105, Seminyak, Kec. Kuta, Kab. Badung, Bali, 80361",email:"marushka@extraordinaryjourneys.com"},
   {name:"Chloe Igo",title:"Graphic Designer",dept:"Marketing",cell:"+27 83 391 3455",address:"13 St Quintons Rd, Oranjezicht, Cape Town, 8001",email:"chloe.igo@extraordinaryjourneys.com"},
-  {name:"Melony van der Merwe",title:"Head of Partnerships & PR",dept:"Marketing",cell:"+1 (347) 496 1302",address:"1600 West Ave Apt 201 Miami Beach, FL 33139",ext:"732",direct:"(305) 390-4334",email:"melony@extraordinaryjourneys.com"},
+  {name:"Melony van der Merwe",title:"Head of Partnerships & PR",dept:"Marketing",cell:"+1 (347) 496 1302",address:"4019 N Meridian Ave Miami Beach, FL 33140",ext:"732",direct:"(305) 390-4334",email:"melony@extraordinaryjourneys.com"},
   {name:"Julie Banks",title:"Trip Coordinator",dept:"Operations",cell:"(404) 483-2788",address:"2771 Upper Paw Paw Road Marshall, NC 28753",calendly:"https://calendly.com/julie-extraordinaryjourneys",ext:"722",direct:"(929) 415-8397",email:"julie@extraordinaryjourneys.com"},
   {name:"Amber Blanchard",title:"Trip Operations Manager",dept:"Operations",cell:"(608) 712-0092",address:"1 N Berkshire Ln Roundlake, IL 60073",calendly:"https://calendly.com/amber-extraordinaryjourneys",ext:"789",direct:"(929) 298-6722",email:"amber@extraordinaryjourneys.com"},
   {name:"Jon Blanchard",title:"Operations Assistant",dept:"Operations",cell:"(608) 712-0387",address:"470 Lisa Ct Oregon, WI 53575",email:"jblanchard@extraordinaryjourneys.com"},
-  {name:"Brea Boatwright",title:"Trip Coordinator",dept:"Operations",cell:"(407) 443-2675",address:"300 Pecan Dr. Dallas, GA 30132",ext:"729",direct:"(929) 295-5345",email:"brea@extraordinaryjourneys.com"},
+  {name:"Brea Boatwright",title:"Trip Coordinator",dept:"Operations",cell:"(407) 443-2675",address:"300 Pecan Dr. Dallas, GA 30132",calendly:"https://calendly.com/brea-extraordinaryjourneys",ext:"729",direct:"(929) 295-5345",email:"brea@extraordinaryjourneys.com"},
   {name:"Rachel Cappucci",title:"Head of Business Operations",dept:"Operations",cell:"(508) 981-8383",address:"1 Garfield Ave Shrewsbury, MA 01545",calendly:"https://calendly.com/rachel-extraordinaryjourneys",ext:"715",direct:"(929) 294-7523",email:"rachel@extraordinaryjourneys.com"},
-  {name:"Samantha Lambert",title:"Trip Coordinator",dept:"Operations",cell:"(330) 771-3987",address:"108 Murray Ave Minerva, OH 44657",ext:"718",direct:"(929) 399-2766",email:"samantha@extraordinaryjourneys.com"},
+  {name:"Samantha Lambert",title:"Trip Coordinator",dept:"Operations",cell:"(330) 771-3987",address:"108 Murray Ave Minerva, OH 44657",calendly:"https://calendly.com/samantha-extraordinaryjourneys",ext:"718",direct:"(929) 399-2766",email:"samantha@extraordinaryjourneys.com"},
   {name:"Mackenzie Morgan",title:"South America Trip Coordinator",dept:"Operations",cell:"(980) 226-8350",address:"17034 Freshwater Lane Cornelius, NC 28031",calendly:"https://calendly.com/mackenzie-extraordinaryjourneys",ext:"723",direct:"(929) 415-8474",email:"mackenzie@extraordinaryjourneys.com"},
   {name:"Lisa Newby-Fraser",title:"Trip Coordinator",dept:"Operations",cell:"+27 82 831 9621",address:"14 Partridge Place Melkbos Cape Town 7441",calendly:"https://calendly.com/lisa-extraordinaryjourneys",ext:"728",direct:"(940) 239-5515",email:"lisa@extraordinaryjourneys.com"},
   {name:"Lauren Sullivan",title:"Trip Coordinator",dept:"Operations",cell:"(907) 612-1534",address:"610 E Callender Street Livingston MT 59047",calendly:"https://calendly.com/lauren-extraordinaryjourneys",ext:"709",direct:"(929) 209-0689",email:"lauren@extraordinaryjourneys.com"},
-  {name:"Gena Tweed",title:"Operations Assistant",dept:"Operations",cell:"(760) 271-0225",address:"4906 N Shadow Lane, Prescott Valley, AZ 86314",email:"gena@extraordinaryjourneys.com"},
   {name:"Jessica Straw",title:"Trip Coordinator",dept:"Operations",cell:"(608) 712-0262",address:"3479 Big Sky Muscatine, IA 52761",calendly:"https://calendly.com/jessica-extraordinaryjourneys",ext:"733",direct:"(202) 223-8760",email:"jessica@extraordinaryjourneys.com"},
   {name:"Katelyn McMillan",title:"Trip Coordinator (part time)",dept:"Operations",cell:"(765) 336-4689",address:"405 E 6th Street Sheridan, IN 46069",ext:"719",direct:"(929) 415-8301",email:"katelyn@extraordinaryjourneys.com"},
   {name:"Alyssa Hager",title:"Trip Coordinator",dept:"Operations",cell:"563-568-1356",address:"500 CR 742/294 Almont, CO 81210",calendly:"https://calendly.com/alyssa-extraordinaryjourneys",ext:"705",direct:"(929) 679-5902",email:"alyssa@extraordinaryjourneys.com"},
-  {name:"Elizma Fourie",title:"Trip Coordinator",dept:"Operations",ext:"706",direct:"(929) 662-5165",email:"elizma@extraordinaryjourneys.com"},
+  {name:"Elizma Fourie",title:"Trip Coordinator",dept:"Operations",calendly:"https://calendly.com/elizma-extraordinaryjourneys",ext:"706",direct:"(929) 662-5165",email:"elizma@extraordinaryjourneys.com"},
   {name:"Amelia Adamson",title:"Destination Specialist | Africa, Middle East & India",dept:"Sales",cell:"(503) 367 0896",address:"Colletts Gate 31B Oslo, Norway 0169",calendly:"https://calendly.com/amelia-extraordinaryjourneys",ext:"712",direct:"(929) 295-5275",email:"amelia@extraordinaryjourneys.com"},
   {name:"Anisha Barrientos",title:"Senior Destination Specialist | Africa",dept:"Sales",cell:"(310) 866-1089",address:"7440 McCool Ave Los Angeles, CA 90045",calendly:"https://calendly.com/anisha-extraordinaryjourneys",ext:"717",direct:"(929) 346-5440",email:"anisha@extraordinaryjourneys.com"},
   {name:"Brigid Finley",title:"Destination Specialist | Africa & Middle East",dept:"Sales",cell:"(213) 458-4944",address:"806 Ethel Street Austin, TX 78704",calendly:"https://calendly.com/brigid-ej",ext:"724",direct:"(929) 578-6836",email:"brigid@extraordinaryjourneys.com"},
+  {name:"Jackie Cuyler",title:"Destination Specialist | Africa",dept:"Sales",address:"3867 Arbol CT Boulder, CO 80301",calendly:"https://calendly.com/jackie-extraordinaryjourneys",ext:"713",direct:"(212) 727-9708",email:"jackie@extraordinaryjourneys.com"},
   {name:"Kim Green",title:"Senior Destination Specialist | Africa",dept:"Sales",cell:"(660) 349-9620",address:"9628 E. 63rd Avenue Denver, CO 80238",calendly:"https://calendly.com/kim-extraordinaryjourneys",ext:"707",direct:"(929) 207-6347",email:"kim@extraordinaryjourneys.com"},
   {name:"Lauren Jafry",title:"Head of Sales & Product Development | Asia",dept:"Sales",cell:"(760) 855-1102",address:"1005 San Andrade Dr Encinitas, CA 92024",calendly:"https://calendly.com/laurenj-extraordinaryjourneys",ext:"721",direct:"(929) 296-1145",email:"laurenj@extraordinaryjourneys.com"},
   {name:"Chris Craigo",title:"Japan Specialist",dept:"Sales",cell:"(828) 655-6475",address:"3601 Conti St. Apt 5220 New Orleans LA 70119",calendly:"https://calendly.com/chris-extraordinaryjourneys",ext:"734",direct:"(614) 508-1370",email:"chris@extraordinaryjourneys.com"},
@@ -82,7 +81,7 @@ const DIR=[
   {name:"ClearCom IT",title:"IT Company",dept:"IT",cell:"508-892-5555, 508-205-1116",email:"tickets@clearcomit.com"},
   {name:"Shaun (Cremins Consulting)",title:"Quickbooks Assist",dept:"QB",address:"https://www.creminsconsulting.com/"},
   {name:"Keap (Ben Sypher)",title:"Keap Account Rep",dept:"CRM",email:"benjamin.sypher@keap.com"},
-  {name:"Keap Support",title:"Keap Support",dept:"CRM",cell:"866-800-0004 ext 2 or 3; urgent: 480-499-6510"},
+  {name:"Keap Support",title:"Keap Support",dept:"CRM",cell:"866-800-0004 (Support Ext 2 or 3); urgent: 480-499-6510"},
 ];
 
 const FKEYS={email:['email'],cell:['cell'],phone:['cell','ext','direct'],ext:['ext'],extension:['ext'],direct:['direct'],address:['address'],cal:['calendly'],calendly:['calendly'],title:['title','dept'],department:['dept'],dept:['dept'],number:['cell','ext','direct'],call:['cell','ext','direct']};
